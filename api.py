@@ -828,13 +828,6 @@ def handle_request():
     return {"error": "Không chạy được workflow"}, 500
 
 if __name__ == "__main__":
-    logging.info("Khởi động ứng dụng...")
-    setup_ngrok()
-    ngrok_url, ngrok_process = start_ngrok_server()
-    if ngrok_url:
-        logging.info(f"Ngrok server chạy tại: {ngrok_url}")
-        logging.info(f"VPS User Web: {ngrok_url}/vpsuser")
-        app.run(port=LOCAL_PORT)
-    else:
-        logging.error("Không thể khởi động ngrok server")
-    ngrok_process.terminate()
+    logging.info("Khởi động ứng dụng trên Render...")
+    app.run(host="0.0.0.0", port=10000)
+
