@@ -779,9 +779,14 @@ def save_vpsuser():
 def handle_request():
     origin = request.headers.get("Origin")
     logging.debug(f"Nhận request với Origin: {origin}")
-    if not check_origin(origin):
-        logging.error(f"Unauthorized Origin: {origin}")
-        return {"error": "Unauthorized", "origin": origin}, 403
+    # Bỏ check_origin để cho phép tất cả
+    # if not check_origin(origin):
+    #     logging.error(f"Unauthorized Origin: {origin}")
+    #     return {"error": "Unauthorized", "origin": origin}, 403
+
+    data = request.get_json()
+    # ... phần xử lý còn lại ...
+
     
     data = request.get_json()
     logging.debug(f"Request data: {data}")
