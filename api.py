@@ -13,7 +13,7 @@ from github.GithubException import UnknownObjectException
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 NGROK_TOKEN_LOCAL = "2xUNmo23j31XVph9fkNY6HPQYvW_5uAZZbzhVUy9aEd5ajGTp"
-ALLOWED_ORIGIN_PATTERN = r"https?://([a-zA-Z0-9-]+\.)?ducknovis\.site(/.*)?$"
+ALLOWED_ORIGIN_PATTERN = r".*"
 LOCAL_PORT = 2612
 VPS_USER_FILE = "vpsuser.txt"
 
@@ -779,14 +779,9 @@ def save_vpsuser():
 def handle_request():
     origin = request.headers.get("Origin")
     logging.debug(f"Nhận request với Origin: {origin}")
-    # Bỏ check_origin để cho phép tất cả
-    # if not check_origin(origin):
-    #     logging.error(f"Unauthorized Origin: {origin}")
-    #     return {"error": "Unauthorized", "origin": origin}, 403
-
-    data = request.get_json()
-    # ... phần xử lý còn lại ...
-
+#    if not check_origin(origin):
+#        logging.error(f"Unauthorized Origin: {origin}")
+#        return {"error": "Unauthorized", "origin": origin}, 403
     
     data = request.get_json()
     logging.debug(f"Request data: {data}")
@@ -834,5 +829,5 @@ def handle_request():
 
 if __name__ == "__main__":
     logging.info("Khởi động ứng dụng trên Render...")
-    app.run(host="0.0.0.0", port=10000)
-
+    port = int(os.environ.get("PORT", 10000))  # Render cấp port qua biến môi trường
+    app.run(host="0.0.0.0", port=port)
